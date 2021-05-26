@@ -11,6 +11,18 @@ class CartItem extends React.Component{
             img: ''
         }
     }
+
+    increaseQuantity = () => {
+        // console.log('test');                            // For testing purpose
+        console.log('this.state', this.state);
+        
+        // var qtyDiv = document.getElementById('qty');
+        
+        // this.state.qty = this.state.qty + 1;
+
+        // qtyDiv.replaceWith('Qty: ', this.state.qty);
+    }
+
     render() {
         const { price, title, qty } = this.state                                          // Object Destructuring
         return (
@@ -22,12 +34,25 @@ class CartItem extends React.Component{
                 <div className="right-block">
                     <div style={ { fontSize: 25 } }> {title} </div>                            {/* Created the styling using JS object right away */}
                     <div style={ { color: "grey" } }>Rs {price} </div>
-                    <div style={ { color: "grey" } }>Qty: {qty} </div>
+                    <div id="qty" style={ { color: "grey" } }>Qty: {qty} </div>
                     <div className="cart-item-actions">
                         {/* Buttons */}
-                        <img alt="increase" className="action-icons" src="https://image.flaticon.com/icons/png/512/992/992651.png" />
-                        <img alt="decrease" className="action-icons" src="https://image.flaticon.com/icons/png/512/992/992683.png" />
-                        <img alt="delete" className="action-icons" src="https://image.flaticon.com/icons/png/512/1214/1214428.png" />
+                        <img 
+                            alt="increase" 
+                            className="action-icons" 
+                            src="https://image.flaticon.com/icons/png/512/992/992651.png" 
+                            onClick={this.increaseQuantity}
+                        />
+                        <img 
+                            alt="decrease" 
+                            className="action-icons" 
+                            src="https://image.flaticon.com/icons/png/512/992/992683.png" 
+                        />
+                        <img 
+                            alt="delete" 
+                            className="action-icons" 
+                            src="https://image.flaticon.com/icons/png/512/1214/1214428.png" 
+                        />
                     </div>
                 </div>
             </div>        
@@ -39,8 +64,8 @@ class CartItem extends React.Component{
 const styles = {
     image: {
         // Do not need to write px as JSX adds it automatically
-        height: 140,
-        width: 140,
+        height: 130,
+        width: 130,
         borderRadius: 4,
         background: '#ccc'
     }
