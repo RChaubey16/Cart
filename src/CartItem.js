@@ -12,15 +12,49 @@ class CartItem extends React.Component{
         }
     }
 
+    // Function to increase the quantity
+
     increaseQuantity = () => {
         // console.log('test');                            // For testing purpose
-        console.log('this.state', this.state);
-        
-        // var qtyDiv = document.getElementById('qty');
-        
-        // this.state.qty = this.state.qty + 1;
 
-        // qtyDiv.replaceWith('Qty: ', this.state.qty);
+        
+        console.log('this.state', this.state);
+
+
+        // SetState Method 1 - Use this when you don't require the previous State
+        // this.setState({
+        //     qty: this.state.qty + 1
+        // });
+
+        // SetState Method 2 - Use this when you require the previous State
+        // Currently as we require the data of the previous quantity, we use method 2
+        this.setState((prevState) => {
+            return {
+                qty: prevState.qty + 1
+            }
+        });
+
+    }
+
+    // Function to decrease the quantity
+
+    decreaseQuantity = () => {
+        // console.log('test');                                                             // For testing purpose
+    
+        console.log('this', this.state);
+
+        // SetState Method 2 
+        this.setState((prevState) => {
+
+            // to avoid the negative numbers
+            if (prevState.qty == 0){
+                return;
+            }
+
+            return {
+                qty: prevState.qty - 1
+            }
+        });
     }
 
     render() {
@@ -47,6 +81,7 @@ class CartItem extends React.Component{
                             alt="decrease" 
                             className="action-icons" 
                             src="https://image.flaticon.com/icons/png/512/992/992683.png" 
+                            onClick={this.decreaseQuantity}
                         />
                         <img 
                             alt="delete" 
