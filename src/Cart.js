@@ -32,6 +32,34 @@ class Cart extends React.Component {
     };
   }
 
+  // function to increase the qty
+  handleIncreaseQuantity = (product) => {
+    console.log("Hey please increase the qty of ", product);
+    const { products } = this.state;
+    const index = products.indexOf(product);
+
+    products[index].qty += 1;
+    this.setState({
+      products: products,
+    });
+  };
+
+  // function to decrease the qty
+  handleDecreaseQuantity = (product) => {
+    console.log("Hey pls decrease the qty of ", product);
+    const { products } = this.state;
+    const index = products.indexOf(product);
+
+    if (products[index].qty === 0) {
+      return;
+    }
+
+    products[index].qty -= 1;
+    this.setState({
+      products: products,
+    });
+  };
+
   render() {
     const { products } = this.state;
     return (
@@ -39,7 +67,14 @@ class Cart extends React.Component {
         {/* Usage of the CartItem Component inside Cart Component */}
 
         {products.map((product) => {
-          return <CartItem product={product} key={product.id} />;
+          return (
+            <CartItem
+              product={product}
+              key={product.id}
+              onIncreaseQty={this.handleIncreaseQuantity}
+              onDecreaseQty={this.handleDecreaseQuantity}
+            />
+          );
         })}
 
         {/* map function used to iterate over the array calling the function */}

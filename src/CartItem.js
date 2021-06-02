@@ -1,52 +1,6 @@
 import React from "react";
 
 class CartItem extends React.Component {
-  // Function to increase the quantity
-
-  increaseQuantity = () => {
-    // console.log('test');                            // For testing purpose
-
-    console.log("this.state", this.state);
-
-    // SetState Method 1 - Use this when you don't require the previous State
-    // this.setState({
-    //     qty: this.state.qty + 1
-    // });
-
-    // SetState Method 2 - Use this when you require the previous State
-    // Currently as we require the data of the previous quantity, we use method 2
-    this.setState(
-      (prevState) => {
-        return {
-          qty: prevState.qty + 1,
-        };
-      },
-      () => {
-        console.log(this.state);
-      }
-    );
-  };
-
-  // Function to decrease the quantity
-
-  decreaseQuantity = () => {
-    // console.log('test');                                                             // For testing purpose
-
-    console.log("this", this.state);
-
-    // SetState Method 2
-    this.setState((prevState) => {
-      // to avoid the negative numbers
-      if (prevState.qty === 0) {
-        return;
-      }
-
-      return {
-        qty: prevState.qty - 1,
-      };
-    });
-  };
-
   render() {
     const { price, title, qty } = this.props.product; // Object Destructuring
     return (
@@ -67,13 +21,13 @@ class CartItem extends React.Component {
               alt="increase"
               className="action-icons"
               src="https://image.flaticon.com/icons/png/512/992/992651.png"
-              onClick={this.increaseQuantity}
+              onClick={() => this.props.onIncreaseQty(this.props.product)}
             />
             <img
               alt="decrease"
               className="action-icons"
               src="https://image.flaticon.com/icons/png/512/992/992683.png"
-              onClick={this.decreaseQuantity}
+              onClick={() => this.props.onDecreaseQty(this.props.product)}
             />
             <img
               alt="delete"
