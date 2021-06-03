@@ -3,6 +3,8 @@ import React from "react";
 class CartItem extends React.Component {
   render() {
     const { price, title, qty } = this.props.product; // Object Destructuring
+    const { product, key, onDecreaseQty, onIncreaseQty, onDeleteProduct } =
+      this.props;
     return (
       <div className="cart-item">
         <div className="left-block">
@@ -21,18 +23,19 @@ class CartItem extends React.Component {
               alt="increase"
               className="action-icons"
               src="https://image.flaticon.com/icons/png/512/992/992651.png"
-              onClick={() => this.props.onIncreaseQty(this.props.product)}
+              onClick={() => onIncreaseQty(product)}
             />
             <img
               alt="decrease"
               className="action-icons"
               src="https://image.flaticon.com/icons/png/512/992/992683.png"
-              onClick={() => this.props.onDecreaseQty(this.props.product)}
+              onClick={() => onDecreaseQty(product)}
             />
             <img
               alt="delete"
               className="action-icons"
               src="https://image.flaticon.com/icons/png/512/1214/1214428.png"
+              onClick={() => onDeleteProduct(product.id)}
             />
           </div>
         </div>
