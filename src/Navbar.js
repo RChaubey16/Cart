@@ -1,6 +1,6 @@
 import React from "react";
 
-function Navbar() {
+function Navbar(props) {
   return (
     <div style={styles.nav}>
       <div style={styles.cartIconContainer}>
@@ -11,7 +11,7 @@ function Navbar() {
           alt="Cart-Icon"
         />
         {/* the count of products in cart */}
-        <span style={styles.cartCount}>3</span>
+        <span style={styles.cartCount}> {props.count} </span>
       </div>
     </div>
   );
