@@ -2,17 +2,16 @@ import React from "react";
 import ReactDOM from "react-dom";
 import "./index.css";
 import App from "./App";
-import * as firebase from "firebase";
-import "firebase/firestore";
+import firebase from "firebase/app";
 
 // Your web app's Firebase configuration
-const firebaseConfig = {
-  apiKey: "AIzaSyCCAdEEyBT0jzWY4H0mkjfc74p3sLceSR4",
-  authDomain: "cart-9affe.firebaseapp.com",
-  projectId: "cart-9affe",
-  storageBucket: "cart-9affe.appspot.com",
-  messagingSenderId: "824499035985",
-  appId: "1:824499035985:web:bdfb0fac21ab9b402cbd70",
+var firebaseConfig = {
+  apiKey: "AIzaSyCkS-DvuuUocGJ2kGOgfeRWkJd00KQERzg",
+  authDomain: "cart-2a6a5.firebaseapp.com",
+  projectId: "cart-2a6a5",
+  storageBucket: "cart-2a6a5.appspot.com",
+  messagingSenderId: "454726075809",
+  appId: "1:454726075809:web:ba6db57589c1ff6ca5b7e0",
 };
 // Initialize Firebase
 firebase.initializeApp(firebaseConfig);
