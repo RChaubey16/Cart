@@ -12,6 +12,9 @@ class App extends React.Component {
       // loading is true because it loads untill all the products are fetched
       loading: true,
     };
+
+    // this.db represents the command "firebase.firestore()"
+    this.db = firebase.firestore();
   }
 
   componentDidMount() {
@@ -82,10 +85,25 @@ class App extends React.Component {
     const { products } = this.state;
     const index = products.indexOf(product);
 
-    products[index].qty += 1;
-    this.setState({
-      products: products,
-    });
+    // products[index].qty += 1;
+    // this.setState({
+    //   products: products,
+    // });
+
+    // fetching the product whose qty has to be increased
+    const docRef = this.db.collection("products").doc(products[index].id);
+
+    docRef
+      // updating the qty
+      .update({
+        qty: products[index].qty + 1,
+      })
+      .then(() => {
+        console.log("Updated Successfully");
+      })
+      .catch((err) => {
+        console.log("Error in updating data: ", err);
+      });
   };
 
   // function to decrease the qty
@@ -94,23 +112,47 @@ class App extends React.Component {
     const { products } = this.state;
     const index = products.indexOf(product);
 
+    // products[index].qty -= 1;
+    // this.setState({
+    //   products: products,
+    // });
+
+    const docRef = this.db.collection("products").doc(products[index].id);
+
     if (products[index].qty === 0) {
       return;
     }
 
-    products[index].qty -= 1;
-    this.setState({
-      products: products,
-    });
+    docRef
+      .update({
+        qty: products[index].qty - 1,
+      })
+      .then(() => {
+        console.log("Quantity decreased successfully");
+      })
+      .catch((err) => {
+        console.log("Error in decreasing quantity: ", err);
+      });
   };
 
   handleDeleteProduct = (id) => {
     const { products } = this.state;
-    const items = products.filter((item) => item.id !== id);
+    //const items = products.filter((item) => item.id !== id);
 
-    this.setState({
-      products: items,
-    });
+    // this.setState({
+    //   products: items,
+    // });
+
+    const docRef = this.db.collection("products").doc(id);
+
+    docRef
+      .delete()
+      .then(() => {
+        console.log("Product Deleted Successfully");
+      })
+      .catch((err) => {
+        console.log("Error in deleting product: ", err);
+      });
   };
 
   getCartCount = () => {
@@ -136,11 +178,35 @@ class App extends React.Component {
     return Total;
   };
 
+  addProduct = () => {
+    this.db
+      .collection("products")
+      .add({
+        // .add will create and add a product in firestore. It will automatically convert the JavaScript Object to document in firebase.
+        price: 14999,
+        qty: 2,
+        img: "",
+        title: "Washing Machine",
+      })
+      .then((docRef) => {
+        // the docRef will refer to the newly created document in collection 'Products'.
+        console.log("Product Added Successfully: ", docRef);
+      })
+      .catch((err) => {
+        // .catch will get the error, if any occured
+        console.log("Error in adding a product to firestore: ", err);
+      });
+  };
+
   render() {
     const { products, loading } = this.state;
     return (
       <div className="App">
         <Navbar count={this.getCartCount()} />
+        {/* Adding a button to add product from react into the db */}
+        <button onClick={this.addProduct} style={{ padding: 20, fontSize: 20 }}>
+          Add Product
+        </button>
         <Cart
           products={products}
           onIncreaseQuantity={this.handleIncreaseQuantity}
