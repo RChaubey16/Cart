@@ -52,6 +52,8 @@ class App extends React.Component {
     firebase
       .firestore()
       .collection("products")
+      // .where is used for querying the data which is useful for sorting and filtering products
+      // .where("price", "==", 45000)
       // onSnapshot is the listener which listens to the products collection in firestore
       .onSnapshot((snapshot) => {
         // snapshot means the shot of content in database at that point of time
@@ -198,15 +200,48 @@ class App extends React.Component {
       });
   };
 
+  sortProducts = () => {
+    const { products } = this.state;
+
+    this.db
+      .collection("products")
+      // .orderBy will sort the products using price in ascending oder by default (descending can be set as the next argument)
+      .orderBy("price")
+      .onSnapshot((snapshot) => {
+        const products = snapshot.docs.map((doc) => {
+          console.log(doc.data());
+          const data = doc.data();
+          data["id"] = doc.id;
+          return data;
+        });
+
+        this.setState({
+          products: products,
+          // stops the webpage from loading once the products are fetched
+          loading: false,
+        });
+      });
+  };
+
   render() {
     const { products, loading } = this.state;
     return (
       <div className="App">
         <Navbar count={this.getCartCount()} />
         {/* Adding a button to add product from react into the db */}
-        <button onClick={this.addProduct} style={{ padding: 20, fontSize: 20 }}>
+        <button
+          onClick={this.addProduct}
+          style={{ padding: 20, marginLeft: 10, fontSize: 20 }}
+        >
           Add Product
         </button>
+        <button
+          onClick={this.sortProducts}
+          style={{ padding: 20, marginLeft: 10, marginTop: 10, fontSize: 20 }}
+        >
+          Sort Products
+        </button>
+
         <Cart
           products={products}
           onIncreaseQuantity={this.handleIncreaseQuantity}
