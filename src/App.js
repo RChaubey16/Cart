@@ -231,13 +231,26 @@ class App extends React.Component {
         {/* Adding a button to add product from react into the db */}
         <button
           onClick={this.addProduct}
-          style={{ padding: 20, marginLeft: 10, fontSize: 20 }}
+          style={{
+            padding: 20,
+            borderRadius: 20,
+            border: 0,
+            marginLeft: 10,
+            fontSize: 20,
+          }}
         >
           Add Product
         </button>
         <button
           onClick={this.sortProducts}
-          style={{ padding: 20, marginLeft: 10, marginTop: 10, fontSize: 20 }}
+          style={{
+            padding: 20,
+            marginLeft: 10,
+            borderRadius: 20,
+            border: 0,
+            marginTop: 10,
+            fontSize: 20,
+          }}
         >
           Sort Products
         </button>
